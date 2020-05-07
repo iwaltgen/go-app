@@ -36,9 +36,17 @@ func indirect(nodes ...Node) []UI {
 	inodes := make([]UI, 0, len(nodes))
 
 	for _, n := range nodes {
+		fmt.Println("---------- indirect ----------")
+
+		v := reflect.ValueOf(n)
+
+		fmt.Printf("++++ value: %v %v %v zero: %v\n", v, v.Type(), v.Kind(), v.IsZero())
+
 		if n == nil {
 			continue
 		}
+
+		fmt.Printf("---- value: %v %v %v zero: %v\n", v, v.Type(), v.Kind(), v.IsZero())
 
 		switch t := n.(type) {
 		case Condition:
@@ -48,10 +56,6 @@ func indirect(nodes ...Node) []UI {
 			inodes = append(inodes, t.nodes()...)
 
 		case Composer:
-			fmt.Printf("gonna set compo from indirect: %T %p ~ %T %p\n", t, t, n, n)
-			v := reflect.ValueOf(t)
-			fmt.Printf("value: %v %v %v zero: %v\n", v, v.Type(), v.Kind(), v.IsZero())
-
 			t.setCompo(t)
 			inodes = append(inodes, t)
 
