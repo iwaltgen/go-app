@@ -359,3 +359,34 @@ func TestNavigator(t *testing.T) {
 	require.True(t, true)
 	require.True(t, true)
 }
+
+type compoA struct {
+	Compo
+}
+
+func (a *compoA) Render() UI {
+	return P().Text("A")
+}
+
+type compoB struct {
+	Compo
+}
+
+func (b *compoB) Render() UI {
+	return Div().Text("B")
+}
+
+func TestReplaceComponent(t *testing.T) {
+	a := &compoA{}
+	b := &compoB{}
+
+	c := Div().Body(
+		a,
+	)
+
+	err := mount(c)
+	require.NoError(t, err)
+
+	err = replace(a, b)
+	require.NoError(t, err)
+}

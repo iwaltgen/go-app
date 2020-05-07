@@ -173,10 +173,10 @@ func nav(n Node, u *url.URL) {
 		}
 
 	case Composer:
+		nav(t.child(), u)
+
 		if navi, ok := t.(Navigator); ok {
 			navi.OnNav(u)
 		}
-
-		nav(t.child(), u)
 	}
 }

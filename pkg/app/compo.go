@@ -148,7 +148,6 @@ func (c *Compo) mount(compo Composer) error {
 	if err := mount(root); err != nil {
 		return fmt.Errorf("%T: invalid root: %w", compo, err)
 	}
-	root.setParent(c)
 	c.root = root
 
 	if mounter, ok := compo.(Mounter); ok {
