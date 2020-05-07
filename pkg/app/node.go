@@ -50,7 +50,7 @@ func indirect(nodes ...Node) []UI {
 		case Composer:
 			fmt.Printf("gonna set compo from indirect: %T %p ~ %T %p\n", t, t, n, n)
 			v := reflect.ValueOf(t)
-			fmt.Printf("value: %v %v %v zero: %v\n", v, v.Type(), b.Kind(), v.IsZero())
+			fmt.Printf("value: %v %v %v zero: %v\n", v, v.Type(), v.Kind(), v.IsZero())
 
 			t.setCompo(t)
 			inodes = append(inodes, t)
