@@ -36,6 +36,10 @@ func indirect(nodes ...Node) []UI {
 	inodes := make([]UI, 0, len(nodes))
 
 	for _, n := range nodes {
+		if n == nil {
+			continue
+		}
+
 		switch t := n.(type) {
 		case Condition:
 			inodes = append(inodes, t.nodes()...)
