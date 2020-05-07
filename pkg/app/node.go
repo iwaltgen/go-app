@@ -37,6 +37,7 @@ func indirect(nodes ...Node) []UI {
 
 	for _, n := range nodes {
 		if n == nil {
+			fmt.Println("found a nil node")
 			continue
 		}
 
