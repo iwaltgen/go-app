@@ -37,11 +37,12 @@ func indirect(nodes ...Node) []UI {
 
 	for _, n := range nodes {
 		if n == nil {
-			fmt.Println("found a nil node")
 			continue
 		}
 
 		switch t := n.(type) {
+		case nil:
+
 		case Condition:
 			inodes = append(inodes, t.nodes()...)
 
