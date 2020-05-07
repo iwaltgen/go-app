@@ -169,7 +169,7 @@ func updateRawNode(a, b rawNode) error {
 	return nil
 }
 
-func nav(n Node, u *url.URL) {
+func nav(n UI, u *url.URL) {
 	switch t := n.(type) {
 	case standardNode:
 		for _, c := range t.children() {
@@ -177,10 +177,7 @@ func nav(n Node, u *url.URL) {
 		}
 
 	case Composer:
+		t.nav(u)
 		nav(t.child(), u)
-
-		if navi, ok := t.(Navigator); ok {
-			navi.OnNav(u)
-		}
 	}
 }

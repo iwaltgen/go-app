@@ -37,6 +37,7 @@ type Composer interface {
 	mount(c Composer) error
 	update(n Composer)
 	child() UI
+	nav(u *url.URL)
 }
 
 // Mounter is the interface that describes a component that can perform
@@ -185,6 +186,16 @@ func (c *Compo) update(n Composer) {
 		dispatcher(func() {
 			updatable.OnUpdate()
 		})
+	}
+}
+
+func (c *Compo) nav(u *url.URL) {
+	if c.JSValue() == nil || c.compo == nil {
+		return
+	}
+
+	if navi, ok := c.compo.(Navigator); ok {
+		navi.OnNav(u)
 	}
 }
 
