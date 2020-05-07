@@ -36,17 +36,9 @@ func indirect(nodes ...Node) []UI {
 	inodes := make([]UI, 0, len(nodes))
 
 	for _, n := range nodes {
-		fmt.Println("---------- indirect ----------")
-
-		v := reflect.ValueOf(n)
-
-		fmt.Printf("++++ value: %v %v %v zero: %v\n", v, v.Type(), v.Kind(), v.IsZero())
-
-		if n == nil {
+		if v := reflect.ValueOf(n); !v.IsValid() || v.IsZero() {
 			continue
 		}
-
-		fmt.Printf("---- value: %v %v %v zero: %v\n", v, v.Type(), v.Kind(), v.IsZero())
 
 		switch t := n.(type) {
 		case Condition:

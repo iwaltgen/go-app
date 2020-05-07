@@ -30,7 +30,7 @@ type RangeLoop interface {
 // Range returns a range loop that iterates within the given source. Source must
 // be a slice, an array or a map with strings as keys.
 func Range(src interface{}) RangeLoop {
-	return rangeCondition{source: src}
+	return &rangeCondition{source: src}
 }
 
 type rangeCondition struct {
@@ -38,15 +38,15 @@ type rangeCondition struct {
 	body   []UI
 }
 
-func (c rangeCondition) nodeType() reflect.Type {
+func (c *rangeCondition) nodeType() reflect.Type {
 	return reflect.TypeOf(c)
 }
 
-func (c rangeCondition) nodes() []UI {
+func (c *rangeCondition) nodes() []UI {
 	return c.body
 }
 
-func (c rangeCondition) Slice(f func(int) UI) RangeLoop {
+func (c *rangeCondition) Slice(f func(int) UI) RangeLoop {
 	v := reflect.ValueOf(c.source)
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
 		log.Error("range source is not a slice or array").
@@ -61,7 +61,7 @@ func (c rangeCondition) Slice(f func(int) UI) RangeLoop {
 	return c
 }
 
-func (c rangeCondition) Map(f func(string) UI) RangeLoop {
+func (c *rangeCondition) Map(f func(string) UI) RangeLoop {
 	v := reflect.ValueOf(c.source)
 	if v.Kind() != reflect.Map {
 		log.Error("range source is not a map").

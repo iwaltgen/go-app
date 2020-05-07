@@ -28,7 +28,7 @@ func If(expr bool, nodes ...Node) Condition {
 		nodes = nil
 	}
 
-	return condition{
+	return &condition{
 		body:      indirect(nodes...),
 		satisfied: !expr,
 	}
@@ -39,19 +39,19 @@ type condition struct {
 	satisfied bool
 }
 
-func (c condition) nodeType() reflect.Type {
+func (c *condition) nodeType() reflect.Type {
 	return reflect.TypeOf(c)
 }
 
-func (c condition) isSatisfied() bool {
+func (c *condition) isSatisfied() bool {
 	return c.satisfied
 }
 
-func (c condition) nodes() []UI {
+func (c *condition) nodes() []UI {
 	return c.body
 }
 
-func (c condition) ElseIf(expr bool, nodes ...Node) Condition {
+func (c *condition) ElseIf(expr bool, nodes ...Node) Condition {
 	if !c.satisfied {
 		return c
 	}
@@ -64,6 +64,6 @@ func (c condition) ElseIf(expr bool, nodes ...Node) Condition {
 	return c
 }
 
-func (c condition) Else(nodes ...Node) Condition {
+func (c *condition) Else(nodes ...Node) Condition {
 	return c.ElseIf(true, nodes...)
 }
