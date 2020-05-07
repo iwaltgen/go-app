@@ -133,6 +133,11 @@ func (e *elem) setAttribute(k string, v interface{}) {
 }
 
 func (e *elem) setAttributeValue(k, v string) {
+	fmt.Println("---------- setAttributeValue ----------")
+	fmt.Println("key:", k, "value:", v)
+	fmt.Printf("elem: %q\n", e.tag)
+	fmt.Printf("value: %p\n", e.value)
+
 	e.value.Call("setAttribute", k, v)
 }
 
