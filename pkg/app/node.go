@@ -41,8 +41,6 @@ func indirect(nodes ...Node) []UI {
 		}
 
 		switch t := n.(type) {
-		case nil:
-
 		case Condition:
 			inodes = append(inodes, t.nodes()...)
 
@@ -50,7 +48,7 @@ func indirect(nodes ...Node) []UI {
 			inodes = append(inodes, t.nodes()...)
 
 		case Composer:
-			fmt.Printf("gonna set compo from indirect: %T %p\n", t, t)
+			fmt.Printf("gonna set compo from indirect: %T %p ~ %T %p\n", t, t, n, n)
 			t.setCompo(t)
 			inodes = append(inodes, t)
 
