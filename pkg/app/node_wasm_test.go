@@ -48,6 +48,10 @@ func TestIndirect(t *testing.T) {
 				Div().nodeType(),
 			},
 		},
+		{
+			scenario: "indirect ignores nil node",
+			node:     nil,
+		},
 	}
 
 	for _, test := range tests {
@@ -297,7 +301,7 @@ func TestUpdateComponentFields(t *testing.T) {
 	}
 
 	err := mount(a)
-	t.Log(err)
+	require.NoError(t, err)
 	a.update(b)
 
 	if a.Num != 3 {
