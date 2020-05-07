@@ -48,6 +48,7 @@ func indirect(nodes ...Node) []UI {
 			inodes = append(inodes, t.nodes()...)
 
 		case Composer:
+			fmt.Printf("gonna set compo from indirect: %T %p\n", t, t)
 			t.setCompo(t)
 			inodes = append(inodes, t)
 
