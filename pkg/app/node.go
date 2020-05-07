@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"io"
+	"net/url"
 	"reflect"
 )
 
@@ -162,4 +163,20 @@ func updateRawNode(a, b rawNode) error {
 		return replace(a, b)
 	}
 	return nil
+}
+
+func nav(n Node, u *url.URL) {
+	switch t := n.(type) {
+	case standardNode:
+		for _, c := range t.children() {
+			nav(c, u)
+		}
+
+	case Composer:
+		if navi, ok := t.(Navigator); ok {
+			navi.OnNav(u)
+		}
+
+		nav(t.child(), u)
+	}
 }

@@ -36,6 +36,7 @@ type Composer interface {
 	setCompo(n Composer)
 	mount(c Composer) error
 	update(n Composer)
+	child() UI
 }
 
 // Mounter is the interface that describes a component that can perform
@@ -100,6 +101,10 @@ func (c *Compo) setParent(p UI) {
 
 func (c *Compo) setCompo(n Composer) {
 	c.compo = n
+}
+
+func (c *Compo) child() UI {
+	return c.root
 }
 
 func (c *Compo) dismount() {
